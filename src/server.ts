@@ -23,7 +23,8 @@ setupSwagger(app);;
 
 app.use(
   cors({
-    origin: "http://localhost:5174",
+    origin: ["http://localhost:5174",
+    "https://your-vercel-app.vercel.app"],
     credentials: true,
   })
 );
