@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MyAgro Backend API
 
 A scalable RESTful API for the MyAgro e-commerce platform built with Node.js, Express, TypeScript, Prisma ORM, and PostgreSQL.
@@ -77,3 +78,6 @@ This backend powers authentication, product management, cart system, orders, pay
 
 ---
 
+=======
+# myAgro-backend
+>>>>>>> 70905b2732f9748c47f8e5ce44e6a8625dfcfd89
