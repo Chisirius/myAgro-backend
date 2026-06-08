@@ -1,0 +1,7 @@
+-- CreateEnum
+CREATE TYPE "ProductStatus" AS ENUM ('ACTIVE', 'OUT_OF_STOCK', 'DISABLED');
+
+-- AlterTable
+ALTER TABLE "Product" ADD COLUMN     "sales" INTEGER NOT NULL DEFAULT 0,
+ADD COLUMN     "status" "ProductStatus" NOT NULL DEFAULT 'ACTIVE',
+ALTER COLUMN "stock" SET DEFAULT 0;

@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(BUYER)
+  createdAt DateTime @default(now())
+  products  Product[]
+  cart      Cart[]
+  order     Order[]
+  wishList  WishList[]
+  addresses Address[]
+ 
+}
+
+enum Role {
+  BUYER
+  SELLER
+  ADMIN
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  price       Float
+  oldPrice    Float?
+  stock       Int   @default(0)
+  images    String[]
+  category    String
+  rating      Float? 
+  createdAt   DateTime @default(now())
+
+  sellerId    String
+  seller      User     @relation(fields: [sellerId], references: [id])
+
+  sales       Int      @default(0)
+
+  status      ProductStatus @default(ACTIVE)
+  isDeleted Boolean @default(false)
+
+  cartItems     CartItem[]
+  orderItems    OrderItem[]
+  wishListItems WishlistItem[]
+}
+
+enum ProductStatus {
+  ACTIVE
+  OUT_OF_STOCK
+  DISABLED
+}
+
+model Cart {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+
+  items     CartItem[]
+  createdAt DateTime @default(now())
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+
+  cartId    String
+  cart      Cart     @relation(fields: [cartId], references: [id])
+
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+
+  quantity  Int      @default(1)
+}
+
+model WishList {
+  id           String    @id @default(uuid())
+
+  userId       String    @unique
+  user         User      @relation(fields: [userId], references: [id])
+
+  items        WishlistItem[]
+  createdAt    DateTime  @default(now())
+}
+
+model WishlistItem {
+  id            String     @id @default(uuid())
+  
+  wishlistId    String 
+  wishlist      WishList   @relation(fields: [wishlistId],  references: [id]) 
+
+  productId     String
+  product       Product    @relation(fields: [productId],  references: [id])
+
+  quantity      Int        @default(1)
+}
+
+model Address {
+  id          String   @id @default(uuid())
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  firstName   String
+  lastName    String
+  phoneNumber String
+  additionalPhone String?
+
+  street    String
+  town        String
+  state      String
+
+  isDefault   Boolean  @default(false)
+  orders      Order[]
+  
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Order {
+  id        String   @id @default(uuid())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  items     OrderItem[]
+
+  total     Float
+  status    OrderStatus @default(PENDING)
+
+  paymentReference String?
+  paymentStatus    PaymentStatus @default(PENDING)
+
+  shippingAddressId   String?
+  address Address? @relation(fields: [shippingAddressId], references: [id])
+  trackingId        String? @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+
+  quantity  Int
+  price     Float
+
+  productName  String
+  productImage String
+
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
