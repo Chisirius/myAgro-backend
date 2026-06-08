@@ -5,7 +5,7 @@ export const products = [
       price: 12000,
       oldPrice: 15000,
       category: "Cereals",
-      images: ["https://images.unsplash.com/photo-1601593768797-9a3f1c2c1d2a"],
+      images: ["https://images.unsplash.com/photo-1623066798929-946425dbe1b0"],
       stock: 50,
       rating: 4.5,
       sellerId: "cm1"
@@ -16,7 +16,7 @@ export const products = [
       price: 8000,
       oldPrice: 10000,
       category: "Dairy",
-      images: ["https://images.unsplash.com/photo-1604908177522-040a7e7e1a0b"],
+      images: ["https://plus.unsplash.com/premium_photo-1694481100261-ab16523c4093"],
       stock: 20,
       rating: 4.8,
       sellerId: "cm12"
@@ -49,7 +49,7 @@ export const products = [
       price: 15000,
       oldPrice: 18000,
       category: "Oil",
-      images:[ "https://images.unsplash.com/photo-1620706857370-e1b9770e8c5a"],
+      images:[ "https://media.istockphoto.com/id/151662238/photo/red-palm-oil.webp?a=1&b=1&s=612x612&w=0&k=20&c=tTw_sxp6Ia9VMmI7FgNT8kwaXPNAG1xkV-SYwSJG8QA="],
       stock: 35,
       rating: 4.7,
       sellerId: "cm1234"
@@ -60,7 +60,7 @@ export const products = [
       price: 45000,
       oldPrice: 50000,
       category: "Livestock",
-      images: ["https://images.unsplash.com/photo-1604908176997-125f25cc3a82"],
+      images: ["https://images.unsplash.com/photo-1557431177-d277c24390e5"],
       stock: 10,
       rating: 4.4,
       sellerId: "cm1234"
@@ -71,7 +71,7 @@ export const products = [
       price: 2500,
       oldPrice: 3500,
       category: "Roots & Tubers",
-      images: ["https://images.unsplash.com/photo-1625246333195-78d9c38ad449"],
+      images: ["https://plus.unsplash.com/premium_photo-1725467479101-556af13a7220?"],
       stock: 120,
       rating: 4.2,
       sellerId: "cm123"
