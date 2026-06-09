@@ -9,12 +9,15 @@ export const initializePaystack = async (
       throw new Error("PAYSTACK_SECRET_KEY is missing");
     }
 
+    // Dynamic URL fallback to localhost if production variable is empty
+    const clientUrl = process.env.CLIENT_URL || "http://localhost:5174";
+
     const response = await axios.post(
       "https://api.paystack.co/transaction/initialize",
       {
         email,
         amount: Math.round(amount * 100),
-        callback_url: "http://localhost:5174/checkout",
+        callback_url: `${clientUrl}/checkout`, // Dynamic redirect URL
       },
       {
         headers: {
@@ -23,8 +26,6 @@ export const initializePaystack = async (
         },
       }
     );
-
-    
 
     return response.data.data;
 
