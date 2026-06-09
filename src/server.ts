@@ -24,7 +24,7 @@ setupSwagger(app);;
 app.use(
   cors({
     origin: [
-    "nithub-ecommerce-project-6n2b.vercel.app"],
+    "https://nithub-ecommerce-project-6n2b.vercel.app/"],
     credentials: true,
   })
 );
