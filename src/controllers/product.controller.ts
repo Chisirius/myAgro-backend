@@ -133,7 +133,14 @@ export  const createProduct = async (
               status: "ACTIVE",
             },
             include: {
-              seller: true,
+              seller: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                  role: true,
+                },
+              }
             },
           });
       

@@ -23,8 +23,8 @@ setupSwagger(app);;
 
 app.use(
   cors({
-    origin: ["http://localhost:5174",
-    "https://your-vercel-app.vercel.app"],
+    origin: [
+    "nithub-ecommerce-project-6n2b.vercel.app"],
     credentials: true,
   })
 );
