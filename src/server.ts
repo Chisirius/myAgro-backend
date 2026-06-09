@@ -20,14 +20,32 @@ const app = express()
 const port = 5000;
 setupSwagger(app);;
 
-const corsOptions = {
-  origin: 'https://nithub-ecommerce-project-6n2b.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true // Allow cookies or auth headers if your app uses them
-};
+const allowedOrigins = [
+  "https://nithub-ecommerce-project-6n2b.vercel.app"
+];
 
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, or postman)
+      if (!origin) return callback(null, true);
+      
+      const isAllowedProduction = allowedOrigins.includes(origin);
+      // Dynamically matches any preview/branch deployment URLs from your project
+      const isAllowedPreview = origin.startsWith("https://nithub-ecommerce-project-6n2b-") && origin.endsWith(".vercel.app");
+
+      if (isAllowedProduction || isAllowedPreview) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  })
+);
+
 
 
 
