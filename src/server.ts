@@ -20,14 +20,17 @@ const app = express()
 const port = 5000;
 setupSwagger(app);;
 
+const corsOptions = {
+  origin: 'https://nithub-ecommerce-project-6n2b.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // Allow cookies or auth headers if your app uses them
+};
 
-app.use(
-  cors({
-    origin: [
-    "https://nithub-ecommerce-project-6n2b.vercel.app/"],
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
+
+
+
 
 app.use(express.json());
 
