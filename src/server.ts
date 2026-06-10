@@ -37,9 +37,8 @@ app.use(
 
       // allow all vercel preview deployments
       const isAllowedPreview =
-        origin.includes("nithub-ecommerce-project") &&
-        origin.endsWith(".vercel.app");
-
+      /^https:\/\/nithub-ecommerce-project.*\.vercel\.app$/.test(origin);
+      
       if (isAllowedProduction || isAllowedPreview) {
         callback(null, true);
       } else {

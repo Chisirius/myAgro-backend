@@ -4,7 +4,11 @@ import Jwt  from "jsonwebtoken";
 import bcrypt from "bcrypt"
 
 
-const JWT_SECRET = process.env.JWT_SECRET!;     
+if (!process.env.JWT_SECRET) {
+    throw new Error("JWT_SECRET is missing");
+  }
+  
+  const JWT_SECRET = process.env.JWT_SECRET;
 
 // --------------
 // REGISTER USER
@@ -48,40 +52,45 @@ export async function Register (req: Request, res: Response){
 // ------------
 
 
-export async function Login(req: Request, res: Response){
-    const {email, password} = req.body
-
-   try {
-    // Find user
-    const findUser = await prisma.user.findUnique({
-        where : {email}
-    })
-
-    if (!findUser){
-      return  res.status(400).json({message: "Invalid Credentials"})
-    }
-
-    // Compare password
-
-    const passwordMatch = await bcrypt.compare(password, findUser.password);
-
-    if (!passwordMatch){
-        return res.status(400).json({message: "Invalid Credentials"})
-    }
-
-    // Create token
-    const token = Jwt.sign(
-        {userId: findUser.id, userRole: findUser.role},
+export async function Login(req: Request, res: Response) {
+    const { email, password } = req.body;
+  
+    try {
+      // Find user
+      const findUser = await prisma.user.findUnique({
+        where: { email }
+      });
+  
+      if (!findUser) {
+        return res.status(400).json({ message: "Invalid Credentials" });
+      }
+  
+      // Compare password FIRST
+      const passwordMatch = await bcrypt.compare(
+        password,
+        findUser.password
+      );
+  
+      if (!passwordMatch) {
+        return res.status(400).json({ message: "Invalid Credentials" });
+      }
+  
+      // Create token
+      const token = Jwt.sign(
+        { userId: findUser.id, userRole: findUser.role },
         JWT_SECRET,
-        {expiresIn : "1d"}
-    )
-
-        res.json({
-            token,
-            user: findUser
-          })
-}catch (error){
-    res.status(500).json({ message: "Error logging in" });
-}
-} 
-
+        { expiresIn: "1d" }
+      );
+  
+      // Remove password AFTER validation
+      const { password: _, ...safeUser } = findUser;
+  
+      return res.json({
+        token,
+        user: safeUser
+      });
+  
+    } catch (error) {
+      return res.status(500).json({ message: "Error logging in" });
+    }
+  }

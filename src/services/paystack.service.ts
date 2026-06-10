@@ -8,9 +8,9 @@ export const initializePaystack = async (email: string, amount: number) => {
   }
 
   try {
-    const clientUrl = process.env.CLIENT_URL || "http://localhost:5174";
+    const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
     const response = await axios.post(
-      "https://paystack.co",
+      "https://api.paystack.co/transaction/initialize",
       {
         email,
         amount: Math.round(amount * 100),
@@ -25,6 +25,7 @@ export const initializePaystack = async (email: string, amount: number) => {
     );
     return response.data.data;
   } catch (error: any) {
+    console.log(error)
     throw new Error("Paystack initialization failed");
   }
 };
