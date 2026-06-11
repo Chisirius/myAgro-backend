@@ -8,18 +8,11 @@ async function seedProducts() {
   try {
     console.log("DB URL:", process.env.DATABASE_URL);
     console.log("🌱 Seeding products...");
+    console.log("Products count:", products.length);
 
-    // CLEAN TABLES (correct order because of FK)
-    await prisma.cartItem.deleteMany();
-    await prisma.orderItem.deleteMany();
-    await prisma.wishlistItem.deleteMany();
-
-    await prisma.product.deleteMany();
-    await prisma.cart.deleteMany();
-    await prisma.wishList.deleteMany();
-
+   
     // USERS FIRST (MUST EXIST BEFORE PRODUCTS)
-    await prisma.user.deleteMany();
+    
 
     await prisma.user.createMany({
       data: [
@@ -61,6 +54,7 @@ async function seedProducts() {
 
     console.log("✅ Products seeded successfully");
   } catch (error) {
+    console.error("❌ Seeding failed:", error);
   } finally {
     await prisma.$disconnect();
   }
