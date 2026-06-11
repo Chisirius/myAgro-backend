@@ -25,8 +25,8 @@ setupSwagger(app);;
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
-  "https://chisirius-nithub-ecommerce-project-pqejy4jc0.vercel.app/",
-  "https://chisirius-nithub-ecommerce-project.vercel.app/"
+  "https://chisirius-nithub-ecommerce-project-pqejy4jc0.vercel.app",
+  "https://chisirius-nithub-ecommerce-project.vercel.app"
 ];
 
 app.use(
