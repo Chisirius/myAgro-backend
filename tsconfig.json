@@ -8,5 +8,9 @@
     "outDir": "./dist",
     "sourceMap": true,
     "types": ["node"]
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "**/*.seed.ts"
+  ]
 }

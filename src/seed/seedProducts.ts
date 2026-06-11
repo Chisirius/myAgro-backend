@@ -45,6 +45,7 @@ async function seedProducts() {
           role: "SELLER",
         },
       ],
+      skipDuplicates: true,
     });
 
     // PRODUCTS SECOND
