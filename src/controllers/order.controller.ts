@@ -356,6 +356,7 @@ export const getSellerDashboard = async (
       await prisma.product.findMany({
         where: {
           sellerId,
+          isDeleted: false,
         },
         select: {
           id: true,

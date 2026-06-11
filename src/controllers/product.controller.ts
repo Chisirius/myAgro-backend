@@ -52,7 +52,10 @@ export  const createProduct = async (
         }
     
         const products = await prisma.product.findMany({
-          where: { sellerId },
+          where: {
+            sellerId,
+            isDeleted: false,
+          },
           include: { seller: true },
         });
     
